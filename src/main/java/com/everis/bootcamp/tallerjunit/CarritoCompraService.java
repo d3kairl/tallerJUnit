@@ -38,6 +38,35 @@ public class CarritoCompraService {
 		this.articulos = articulos;
 	}
 	
-	
+	// Metodo CarritoCompraService.aplicarDescuento
+
+		public Double aplicarDescuento(Integer idArticulo, Double porcentajeDescuento) {
+			Double result = null;
+			Articulo artBD = bbddService.findArticuloById(idArticulo);
+			if(null != artBD) {
+				result = calculadorDescuento(artBD.getPrecio(), porcentajeDescuento);
+			}else {
+				System.out.println("No se ha encontrado el item " + idArticulo + " en BD");
+			}
+			return result;
+		}
+
+
+		BaseDeDatosService bbddService = new BaseDeDatosService();
+
+		public BaseDeDatosService getBbddService() {
+			return bbddService;
+		}
+
+		public void setBbddService(BaseDeDatosService bbddService) {
+			this.bbddService = bbddService;
+		}
+		
+		public Integer insertar(Articulo art) {
+			Integer nuevoId = bbddService.insertArticulo(art);
+			articulos.add(art);
+			return nuevoId;
+		}
+
 
 }
